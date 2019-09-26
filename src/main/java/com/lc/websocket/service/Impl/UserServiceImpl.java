@@ -3,6 +3,7 @@ package com.lc.websocket.service.Impl;
 import com.lc.websocket.bean.User;
 import com.lc.websocket.dao.UserDao;
 import com.lc.websocket.service.UserService;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

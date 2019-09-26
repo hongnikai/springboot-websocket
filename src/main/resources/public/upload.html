@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/jquery-2.1.1.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+
+<form id="uploadForm" enctype="multipart/form-data">
+    <p >上传文件： <input type="file" name="file"/></p>
+    <input type="button" value="上传" onclick="doUpload()" />
+</form>
+
+
+</body>
+</html>
+<script type="text/javascript">
+    debugger;
+    function doUpload() {
+        debugger;
+        var formData = new FormData($("#uploadForm")[0]);
+        $.ajax({
+            url: 'http://localhost:8084/testController/postTest',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function (returndata) {
+                alert(returndata);
+            },
+            error: function (returndata) {
+                alert(returndata);
+            }
+        });
+    }
+</script>

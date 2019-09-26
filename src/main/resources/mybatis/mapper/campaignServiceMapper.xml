@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lc.websocket.dao.CampaignDao">
+
+    <resultMap id="CampaignDTO" type="CampaignDTO">
+        <result column="id" property="id" jdbcType="INTEGER"/>
+        <result column="channel" property="channel" jdbcType="VARCHAR"/>
+        <result column="operation" property="operation" jdbcType="VARCHAR"/>
+        <result column="campaign_id" property="campaignId" jdbcType="BIGINT"/>
+        <result column="campaign_name" property="campaignName" jdbcType="VARCHAR"/>
+        <result column="campaign_status" property="campaignStatus" jdbcType="VARCHAR"/>
+        <result column="budget" property="budget" jdbcType="VARCHAR"/>
+        <result column="ad_set_id" property="adSetId" jdbcType="VARCHAR"/>
+        <result column="product_set" property="productSet" jdbcType="VARCHAR"/>
+        <result column="audience" property="audience" jdbcType="VARCHAR"/>
+        <result column="feature" property="feature" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <delete id="deleteCampaign" parameterType="Long">
+      delete from aead_campaign where campaign_id = #{campaignId}
+    </delete>
+
+    <update id="updateCampaign" parameterType="CampaignDTO">
+        update aead_campaign t
+        <set>
+            <trim suffixOverrides=",">
+                t.channel=#{channel},
+                t.operation=#{operation},
+                t.campaign_id=#{campaignId},
+                t.campaign_name=#{campaignName},
+                t.campaign_status=#{campaignStatus},
+                t.budget=#{budget},
+                t.ad_set_id=#{adSetId},
+                t.product_set=#{productSet},
+                t.audience=#{audience},
+                t.feature=#{feature},
+            </trim>
+        </set>
+        where t.campaign_id = #{campaignId}
+    </update>
+
+
+    <sql id="campaign_key">
+        <trim suffixOverrides=",">
+            <if test="channel != null">channel,</if>
+            <if test="operation != null">operation,</if>
+            <if test="campaignId != null">campaign_id,</if>
+            <if test="campaignName != null">campaign_name,</if>
+            <if test="campaignStatus != null">campaign_status,</if>
+            <if test="budget != null">budget,</if>
+            <if test="adSetId != null">ad_set_id,</if>
+            <if test="productSet != null">product_set,</if>
+            <if test="audience != null">audience,</if>
+            <if test="feature != null">feature,</if>
+        </trim>
+    </sql>
+
+    <sql id="campaign_value">
+        <trim suffixOverrides=",">
+            <if test="channel != null">#{channel},</if>
+            <if test="operation != null">#{operation},</if>
+            <if test="campaignId != null">#{campaignId},</if>
+            <if test="campaignName != null">#{campaignName},</if>
+            <if test="campaignStatus != null">#{campaignStatus},</if>
+            <if test="budget != null">#{budget},</if>
+            <if test="adSetId != null">#{adSetId},</if>
+            <if test="productSet != null">#{productSet},</if>
+            <if test="audience != null">#{audience},</if>
+            <if test="feature != null">#{feature},</if>
+        </trim>
+    </sql>
+
+    <!--   /*id,campaign_id,campaign_name,campaign_status,advertising_channel_type,budget_id,budget_name,budget_money,budget_operator,budget_delivery_method,bidding_strategy_type*/-->
+    <insert id="insertCampaign" parameterType="CampaignDTO">
+        insert into aead_campaign(<include refid="campaign_key"/>) values (<include refid="campaign_value"/>)
+    </insert>
+
+    <select id="getAllCampaign" resultType="CampaignDTO">
+        select * from aead_campaign
+    </select>
+
+
+</mapper>
